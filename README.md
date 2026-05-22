@@ -112,4 +112,4 @@ sales-powerbi-dashboard/
 ## Author
 
 **Harsha**
-Master's in Data Analytics, Northeastern University
+
