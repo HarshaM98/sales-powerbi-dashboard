@@ -1,0 +1,10 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Power BI temp files
+*.pbix.bak
+*.pbix.tmp
+
+# Screenshots placeholder (remove this line once you add real screenshots)
+# screenshots/

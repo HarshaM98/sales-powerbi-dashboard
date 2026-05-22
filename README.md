@@ -1,6 +1,6 @@
 # Sales Performance Dashboard (Power BI)
 
-An interactive Power BI dashboard analyzing sales performance, customer behavior, and product-level insights across Jan 2023 to Dec 2024. Built on a star schema data model with custom DAX measures for time intelligence, dynamic revenue toggling, and segment-level profitability analysis.
+An interactive Power BI dashboard analyzing sales performance, customer behavior, and product-level insights across Jan 2023 to Dec 2024. Built using Claude (Anthropic) via MCP server integration, with a star schema data model and custom DAX measures for time intelligence, dynamic revenue toggling, and segment-level profitability analysis.
 
 ---
 
@@ -41,14 +41,18 @@ Visuals include: Revenue by Customer Segment (Consumer $188K, Corporate $79K, SM
 
 ## Data Model
 
-Built on a star schema with the following tables:
+![Data Model](screenshots/data_model.png)
 
-- `FactOrders` (transactional data, order status, ship region)
-- `DimProduct` (product name, category)
-- `DimCustomer` (customer name, segment)
-- `DimDate` (date, month-year for time intelligence)
-- `_Measures` (dedicated DAX measures table)
-- `RevenueToggle` (dynamic Gross vs. Net revenue toggle)
+Star schema with `FactOrders` at the center, connected to four dimension tables via one-to-many relationships.
+
+| Table | Key Columns |
+|---|---|
+| `FactOrders` | OrderID, CustomerID, ProductID, OrderDate, Quantity, DiscountPct, OrderStatus, PaymentMethod, ShipDate |
+| `DimProduct` | ProductID, ProductName, Category, SubCategory, Brand, UnitCost, UnitPrice, StockStatus |
+| `DimCustomer` | CustomerID, CustomerName, Segment, Region, State, City, Email, JoinDate |
+| `DimDate` | Date, Month, MonthYear, Quarter, DayOfWeek and sort/num variants for correct ordering |
+| `RevenueToggle` | View (drives Gross vs. Net dynamic measure) |
+| `_Measures` | All DAX measures isolated in a dedicated table |
 
 ---
 
@@ -56,13 +60,14 @@ Built on a star schema with the following tables:
 
 | Measure | Description |
 |---|---|
-| Total Revenue / Selected Revenue | Core revenue with dynamic toggle |
+| Total Revenue / Selected Revenue | Core revenue with dynamic Gross vs. Net toggle |
 | Revenue PY | Prior year revenue via time intelligence |
 | Revenue YoY Growth | Year-over-year % change |
 | Revenue MoM Growth | Month-over-month % change |
 | Revenue YTD | Year-to-date running total |
 | Gross Profit / Profit Margin % | Profitability measures |
 | Average Order Value | Revenue / Total Orders |
+| Average Discount | Discount analysis |
 | Repeat Customer Rate | % of returning customers |
 | Cancellation Rate / Cancelled Revenue | Order health metrics |
 | Revenue Contribution % | Share of total per product/customer |
@@ -89,6 +94,7 @@ sales-powerbi-dashboard/
   screenshots/
     sales_performance.png
     customer_product_insights.png
+    data_model.png
 ```
 
 ---
@@ -99,9 +105,11 @@ sales-powerbi-dashboard/
 - DAX (Data Analysis Expressions)
 - Star schema data model
 - Time intelligence (YTD, YoY, MoM)
+- Built with assistance from Claude (Anthropic) via MCP server integration
 
 ---
 
 ## Author
 
 **Harsha**
+Master's in Data Analytics, Northeastern University
